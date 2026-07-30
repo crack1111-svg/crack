@@ -1,53 +1,35 @@
-# StructCrack: Lightweight Structure-Aware Mamba Network for Crack Segmentation
+# StructCrack
 
-This repository provides the research code for the manuscript **“StructCrack: A Lightweight Structure-Aware MambaNetwork for Fine-Grained Crack Segmentation.”** The implementation is contained in [`StructCrack/`](StructCrack/).
+Lightweight structure-aware Mamba network for fine-grained crack segmentation.
 
-The model is designed for binary pixel-level segmentation of cracks in structural images. It contains a structure-aware visual state-space backbone, gated bottleneck convolution, structure-aware feature processing, multi-scale fusion, a detail branch, and a decoder. Training, inference, model profiling, and metric computation are provided as executable scripts.
+StructCrack performs binary pixel-level segmentation of cracks in structural images. The implementation includes a structure-aware Mamba encoder, detail-aware hierarchical decoder, output refinement, training, inference, profiling, and evaluation.
 
-## Manuscript
-
-The manuscript PDF is included for reference: [Download StructCrack manuscript](StructCrack_manuscript.pdf).
-
-## Model architecture
-
-The model figure from the manuscript is available as [PDF](StructCrack/docs/figures/model.pdf) and as a [PNG preview](StructCrack/docs/figures/model.png).
+## Model
 
 ![StructCrack model architecture](StructCrack/docs/figures/model.png)
 
-## Visual method summary
+The model figure is available as [`model.png`](StructCrack/docs/figures/model.png). PDF files are not included in this GitHub release.
 
-```mermaid
-flowchart LR
-    I[Structural RGB image] --> P[Resize / normalize]
-    P --> B[SAVSS backbone]
-    B --> S[Structure-aware scanning]
-    B --> G[Gated bottleneck convolution]
-    S --> F[Multi-scale feature fusion]
-    G --> F
-    F --> D[Detail branch + decoder]
-    D --> O[Binary crack mask]
+## Repository
+
+```text
+.
+|-- StructCrack/
+|   |-- datasets/       Dataset loading and augmentation
+|   |-- eval/           Segmentation evaluation
+|   |-- models/         Decoder and feature modules
+|   |-- mmcls/          SAVSS and supporting modules
+|   |-- main.py         Training entry point
+|   |-- test.py         Inference entry point
+|   |-- option.py       Experiment configuration
+|   `-- requirements.txt
+|-- README.md
+`-- .gitignore
 ```
-
-The repository does not include dataset images, prediction examples, or checkpoint files. Numerical results should be taken from the manuscript and reproduced using the documented dataset split and configuration.
-
-## Main contents
-
-| Path | Description |
-| --- | --- |
-| [`StructCrack/main.py`](StructCrack/main.py) | Training entry point |
-| [`StructCrack/test.py`](StructCrack/test.py) | Checkpoint-based inference |
-| [`StructCrack/eval_compute.py`](StructCrack/eval_compute.py) | Prediction metric computation |
-| [`StructCrack/option.py`](StructCrack/option.py) | Experiment presets and hyperparameters |
-| [`StructCrack/models/`](StructCrack/models/) | Model modules, fusion, detail branch, and decoder |
-| [`StructCrack/mmcls/SAVSS_dev/`](StructCrack/mmcls/SAVSS_dev/) | SAVSS implementation |
-| [`StructCrack/datasets/`](StructCrack/datasets/) | Image-mask loading and training augmentation |
-| [`StructCrack/eval/`](StructCrack/eval/) | F1, precision, recall, mIoU, ODS, and OIS evaluation |
-| [`StructCrack/README.md`](StructCrack/README.md) | Full installation and reproducibility guide |
-| [`StructCrack/CODE_AVAILABILITY.md`](StructCrack/CODE_AVAILABILITY.md) | Manuscript-facing code availability statement |
 
 ## Environment
 
-The reference environment is Python 3.10, PyTorch 1.13.1, torchvision 0.14.1, CUDA 11.6, `mmcv-full`, Mamba-SSM 1.2.0, OpenCV, NumPy, and the packages listed in [`StructCrack/requirements.txt`](StructCrack/requirements.txt). Linux with an NVIDIA GPU is recommended because MMCV and Mamba-SSM include compiled components. Windows users may need to select compatible pre-built wheels or build tools.
+Reference environment: Python 3.10, PyTorch 1.13.1, torchvision 0.14.1, CUDA 11.6, MMCV, Mamba-SSM 1.2.0, OpenCV, NumPy, and the packages in [`StructCrack/requirements.txt`](StructCrack/requirements.txt).
 
 ```bash
 cd StructCrack
@@ -56,58 +38,49 @@ conda activate structcrack
 pip install -r requirements.txt
 ```
 
-Install a PyTorch and torchvision wheel compatible with the local CUDA driver before installing compiled dependencies. Record the exact package versions and GPU used for any reported experiment.
+Install a CUDA-compatible PyTorch and torchvision build before compiled dependencies such as MMCV and Mamba-SSM.
 
-## Dataset access and format
-
-The loader expects paired images and binary masks in this form:
+## Dataset format
 
 ```text
 DATASET_ROOT/
-├── train/image/      training images
-├── train/seg_gt/     training masks
-├── val/image/        validation images
-├── val/seg_gt/       validation masks
-├── test/image/       test images
-└── test/seg_gt/      test masks
+|-- train/image/
+|-- train/seg_gt/
+|-- val/image/
+|-- val/seg_gt/
+|-- test/image/
+`-- test/seg_gt/
 ```
 
-The code supports a dataset root supplied through `--dataset_path`. Dataset images and annotations are not included in this repository. Users should obtain them from the official providers, comply with their licenses, and document the dataset version, access conditions, and split used.
-
-Potential benchmark sources mentioned by the underlying project include [TUT](https://github.com/Karl1109/TUT), [DeepCrack](https://github.com/yhlleo/DeepCrack), [Crack500](https://github.com/fyangneil/pavement-crack-detection), and [CrackMap](https://github.com/niuchuangnn/CrackMap). These links are provided for dataset discovery only; users must verify the current official source and redistribution terms before use.
+Images and masks are paired by filename. Dataset images and annotations are not included in this repository.
 
 ## Usage
 
-From `StructCrack/`:
+Train:
 
 ```bash
+cd StructCrack
 python main.py --dataset_path /path/to/DATASET_ROOT \
   --exp_preset high_acc \
   --output_dir ./logs/checkpoints/structcrack_highacc
 ```
 
-Available presets include `baseline`, `high_acc`, `lightweight`, and the ablation presets defined in `option.py`.
-
-For inference, provide a compatible checkpoint through the arguments accepted by `test.py`:
+Inference:
 
 ```bash
+cd StructCrack
 python test.py --help
 python test.py
 ```
 
-For evaluation of generated predictions:
+Evaluation:
 
 ```bash
+cd StructCrack
 python eval_compute.py
 python eval/evaluate.py
 ```
 
-The evaluation implementation calculates threshold-dependent precision, recall, and F1, as well as mIoU, ODS, and OIS. Results are only comparable when preprocessing, mask thresholding, split, checkpoint, and evaluation protocol are held constant.
+## Code Availability
 
-## Reproducibility and code availability
-
-The public repository URL is:
-
-<https://github.com/crack1111-svg/crack>
-
-Before submitting the manuscript revision, create a versioned GitHub release and archive it with Zenodo or another recognised DOI-assigning repository. Insert the permanent DOI and release tag into [`StructCrack/CODE_AVAILABILITY.md`](StructCrack/CODE_AVAILABILITY.md) and the manuscript’s Code Availability section. The manuscript-matching release should include the source code, configuration, split/index files where permitted, environment description, and evaluation instructions.
+Source code: <https://github.com/crack1111-svg/crack>

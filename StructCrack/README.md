@@ -1,83 +1,21 @@
-# StructCrack: Lightweight Structure-Aware Mamba Network for Crack Segmentation
+# StructCrack Code
 
-This repository contains the implementation associated with **StructCrack**, a lightweight structure-aware Mamba network for pixel-level crack segmentation in structural images.
+This directory contains the implementation of the StructCrack crack segmentation model.
 
-The implementation combines a structure-aware visual state-space module (SAVSS), gated bottleneck convolution (GBC), structure-aware scanning, feature fusion, and a detail branch. The repository also includes dataset loading, training, inference, model profiling, and segmentation-metric evaluation utilities.
+## Components
 
-> **Reproducibility note.** This repository is a code release. The dataset images, annotations, checkpoints, and numerical results are not redistributed here unless their respective licenses permit redistribution. Please obtain datasets from their official sources and report the exact release, split, checkpoint, and configuration used for each experiment.
+- `mmcls/SAVSS_dev/`: structure-aware Mamba encoder;
+- `models/detail_branch.py`: high-resolution detail branch;
+- `models/decoder.py`: detail-aware hierarchical decoder;
+- `models/GBC.py`, `models/MFS.py`, `models/PAF.py`: feature processing and fusion;
+- `datasets/crack_dataset.py`: paired image-mask loader and augmentation;
+- `main.py`: training;
+- `test.py`: checkpoint inference;
+- `eval_compute.py` and `eval/`: metric computation.
 
-## Repository status
+The model preview is available at [`docs/figures/model.png`](docs/figures/model.png).
 
-The code is being prepared for public release in support of the manuscript:
-
-> *StructCrack: A Lightweight Structure-Aware MambaNetwork for Fine-Grained Crack Segmentation*
-
-The codebase contains experiment controls in `option.py`, including baseline, high-accuracy, lightweight, and ablation presets. The repository should be tagged with a version corresponding to the manuscript revision before public release.
-
-## Model architecture
-
-The model figure from the manuscript is available as [PDF](docs/figures/model.pdf) and as a [PNG preview](docs/figures/model.png).
-
-![StructCrack model architecture](docs/figures/model.png)
-
-## Method overview
-
-```mermaid
-flowchart LR
-    A[RGB structural image] --> B[Resize and normalization]
-    B --> C[SAVSS backbone]
-    C --> D[GBC and structure-aware scanning]
-    C --> E[Multi-scale feature fusion]
-    E --> F[Detail branch and decoder]
-    F --> G[Binary crack probability map]
-    G --> H[Thresholding and metrics]
-```
-
-The released code implements the following main components:
-
-- `models/GBC.py`: gated bottleneck convolution;
-- `mmcls/SAVSS_dev/models/SAVSS/`: structure-aware visual state-space components;
-- `models/MFS.py` and `models/PAF.py`: feature fusion modules;
-- `models/detail_branch.py` and `models/decoder.py`: detail refinement and decoding;
-- `datasets/crack_dataset.py`: paired image-mask loading and training augmentation;
-- `eval/` and `eval_compute.py`: F1, precision, recall, mIoU, ODS, and OIS evaluation.
-
-The complete manuscript PDF is available at [`../StructCrack_manuscript.pdf`](../StructCrack_manuscript.pdf). No dataset images, checkpoints, or unverified result plots are included in this code release.
-
-## Directory structure
-
-```text
-.
-├── datasets/                 Dataset and augmentation implementation
-├── eval/                     Evaluation helpers
-├── mmcls/                    Local classification utilities used by the model
-├── models/                   Backbone, fusion, detail, and decoder modules
-├── tools/                    Profiling utilities
-├── util/                     Logging, output, and model-profile helpers
-├── main.py                   Training entry point
-├── test.py                   Inference entry point
-├── eval_compute.py           Metric computation entry point
-├── option.py                 Experiment and model configuration
-└── engine.py                 Training loop
-```
-
-## Environment
-
-The original implementation was developed for the following software stack. Exact compatibility may depend on the CUDA driver and GPU architecture.
-
-| Component | Version used by the reference setup |
-| --- | --- |
-| Operating system | Linux recommended; Windows may require dependency adjustments |
-| Python | 3.10 |
-| PyTorch | 1.13.1 |
-| torchvision | 0.14.1 |
-| CUDA build | 11.6 in the reference setup |
-| MMCV | `mmcv-full`, compatible with the selected PyTorch/CUDA build |
-| Mamba-SSM | 1.2.0 |
-| NumPy | compatible version for the selected PyTorch stack |
-| OpenCV | required by the dataset and evaluation code |
-
-Install the pinned high-level dependencies with:
+## Installation
 
 ```bash
 conda create -n structcrack python=3.10 -y
@@ -85,32 +23,23 @@ conda activate structcrack
 pip install -r requirements.txt
 ```
 
-Install the PyTorch wheel appropriate for the target CUDA version before installing `mmcv-full` and `mamba-ssm`. These packages include compiled extensions; consult their official installation instructions when the local CUDA version differs from the reference setup.
+Reference versions are PyTorch 1.13.1, torchvision 0.14.1, CUDA 11.6, and Mamba-SSM 1.2.0. Use versions compatible with the local CUDA driver for compiled packages.
 
-## Dataset format
-
-The default dataset loader expects one dataset root with the following structure:
+## Dataset layout
 
 ```text
 DATASET_ROOT/
-├── train/
-│   ├── image/
-│   └── seg_gt/
-├── val/
-│   ├── image/
-│   └── seg_gt/
-└── test/
-    ├── image/
-    └── seg_gt/
+|-- train/image/
+|-- train/seg_gt/
+|-- val/image/
+|-- val/seg_gt/
+|-- test/image/
+`-- test/seg_gt/
 ```
 
-Images and masks are paired by filename. The loader binarizes masks using a threshold of 127. It resizes validation and test images to `load_size` and applies random resizing, cropping, flipping, rotation, photometric perturbation, blur, and noise during training when augmentation is enabled.
+The loader reads paired images and masks by filename and binarizes masks at threshold 127.
 
-Do not commit restricted datasets or copied annotations to this repository. Instead, provide the official dataset URL, access conditions, dataset version, and a split/index file. The manuscript Data Availability Statement should contain the same information.
-
-## Training
-
-Run training from the repository root:
+## Commands
 
 ```bash
 python main.py --dataset_path /path/to/DATASET_ROOT \
@@ -118,50 +47,15 @@ python main.py --dataset_path /path/to/DATASET_ROOT \
   --output_dir ./logs/checkpoints/structcrack_highacc
 ```
 
-Available presets are `baseline`, `high_acc`, `lightweight`, and the ablation presets defined in `option.py`. For a controlled experiment, record the complete command line, random seed, dataset split, GPU model, CUDA version, checkpoint selection rule, and final threshold.
-
-To inspect all command-line options:
-
-```bash
-python main.py --help
-```
-
-## Inference
-
-Configure the dataset and checkpoint paths in the command-line arguments accepted by `test.py`, then run:
-
 ```bash
 python test.py --help
 python test.py
-```
-
-The exact checkpoint argument names should be verified against the tagged release used for the manuscript, because checkpoint layout is controlled by the current implementation and experiment configuration.
-
-## Evaluation
-
-For prediction files produced by the inference script, use:
-
-```bash
 python eval_compute.py
 python eval/evaluate.py
 ```
 
-The evaluation code reports threshold-dependent precision, recall, and F1, together with mIoU, ODS, and OIS. Do not compare results produced with different image resizing rules, mask conventions, thresholds, or dataset splits without documenting those differences.
+Available experiment presets are defined in `option.py`, including `baseline`, `high_acc`, `lightweight`, and ablation configurations.
 
-## Data and code availability
-
-The source code is intended to be publicly available at:
+## Code Availability
 
 <https://github.com/crack1111-svg/crack>
-
-After the repository has been created, archive the manuscript-matching release with Zenodo or another DOI-minting repository and replace the placeholder below with the permanent DOI:
-
-```text
-Code DOI: to be assigned after the public release is archived.
-```
-
-The public release should include the source code, configuration files, dataset split/index files where redistribution is permitted, environment information, evaluation instructions, and manuscript-matching checkpoints where redistribution is permitted. Dataset images and annotations remain subject to the terms of their original providers.
-
-## Contact
-
-For questions about the implementation or reproducibility of the manuscript experiments, open a GitHub issue with the operating system, Python version, PyTorch/CUDA versions, command line, and full error traceback.
