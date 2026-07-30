@@ -2,7 +2,7 @@
 
 This directory contains the implementation of the StructCrack crack segmentation model.
 
-## Components
+## Main components
 
 - `mmcls/SAVSS_dev/`: structure-aware Mamba encoder;
 - `models/detail_branch.py`: high-resolution detail branch;
@@ -14,6 +14,17 @@ This directory contains the implementation of the StructCrack crack segmentation
 - `eval_compute.py` and `eval/`: metric computation.
 
 The model preview is available at [`docs/figures/model.png`](docs/figures/model.png).
+
+## Dataset sources
+
+| Dataset | Public source |
+| --- | --- |
+| TUT | [TUT repository](https://github.com/Karl1109/TUT) |
+| DeepCrack | [DeepCrack repository](https://github.com/yhlleo/DeepCrack) |
+| Crack500 | [Pavement crack detection repository](https://github.com/fyangneil/pavement-crack-detection) |
+| CrackMap | [CrackMap repository](https://github.com/niuchuangnn/CrackMap) |
+
+Download data from the original providers and comply with their access conditions. Dataset files are not included in this repository.
 
 ## Installation
 
@@ -37,9 +48,9 @@ DATASET_ROOT/
 `-- test/seg_gt/
 ```
 
-The loader reads paired images and masks by filename and binarizes masks at threshold 127.
+The loader pairs images and masks by filename and binarizes masks at threshold 127.
 
-## Commands
+## Reproduction commands
 
 ```bash
 python main.py --dataset_path /path/to/DATASET_ROOT \
@@ -54,7 +65,7 @@ python eval_compute.py
 python eval/evaluate.py
 ```
 
-Available experiment presets are defined in `option.py`, including `baseline`, `high_acc`, `lightweight`, and ablation configurations.
+Experiment presets are defined in `option.py`, including `baseline`, `high_acc`, `lightweight`, and ablation configurations.
 
 ## Code Availability
 

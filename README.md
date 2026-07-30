@@ -2,15 +2,32 @@
 
 Lightweight structure-aware Mamba network for fine-grained crack segmentation.
 
-StructCrack performs binary pixel-level segmentation of cracks in structural images. The implementation includes a structure-aware Mamba encoder, detail-aware hierarchical decoder, output refinement, training, inference, profiling, and evaluation.
+## Overview
 
-## Model
+StructCrack is a research implementation for binary pixel-level segmentation of cracks in structural images. The framework combines a structure-aware Mamba encoder, a detail-aware hierarchical decoder, output refinement, and a reproducible training and evaluation pipeline.
+
+The code is organized for controlled experiments on public crack-segmentation benchmarks. Dataset files, annotations, and trained weights are not redistributed in this repository.
+
+## Method
 
 ![StructCrack model architecture](StructCrack/docs/figures/model.png)
 
-The model figure is available as [`model.png`](StructCrack/docs/figures/model.png). PDF files are not included in this GitHub release.
+The implementation includes a structure-aware visual state-space encoder, gated bottleneck convolution, multi-scale feature fusion, a high-resolution detail branch, hierarchical decoding, and a binary segmentation head.
 
-## Repository
+## Public datasets
+
+The following public resources are referenced by the implementation and the associated experiments. Access conditions and dataset licenses are determined by the original providers.
+
+| Dataset | Source and access | Intended use |
+| --- | --- | --- |
+| TUT | [TUT repository](https://github.com/Karl1109/TUT) | Crack segmentation benchmark and split reference |
+| DeepCrack | [DeepCrack repository](https://github.com/yhlleo/DeepCrack) | Pixel-level crack segmentation benchmark |
+| Crack500 | [Pavement crack detection repository](https://github.com/fyangneil/pavement-crack-detection) | Pavement crack segmentation benchmark |
+| CrackMap | [CrackMap repository](https://github.com/niuchuangnn/CrackMap) | Multi-scene crack segmentation benchmark |
+
+Users should download each dataset from its source, verify the current access instructions, and record the dataset version and split used in an experiment. The repository provides the expected directory layout but does not redistribute the data.
+
+## Repository structure
 
 ```text
 .
@@ -52,11 +69,11 @@ DATASET_ROOT/
 `-- test/seg_gt/
 ```
 
-Images and masks are paired by filename. Dataset images and annotations are not included in this repository.
+Images and masks are paired by filename. Masks are binarized by the dataset loader using a threshold of 127.
 
-## Usage
+## Reproducibility
 
-Train:
+Training:
 
 ```bash
 cd StructCrack
@@ -80,6 +97,8 @@ cd StructCrack
 python eval_compute.py
 python eval/evaluate.py
 ```
+
+Available experiment presets are defined in `StructCrack/option.py`, including `baseline`, `high_acc`, `lightweight`, and ablation configurations.
 
 ## Code Availability
 
