@@ -1,0 +1,30 @@
+# Python and local tooling
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+env/
+.idea/
+.vscode/
+
+# Datasets, outputs, and model artifacts
+data/
+datasets_data/
+logs/
+runs/
+results/
+outputs/
+checkpoints/
+*.pth
+*.pt
+*.ckpt
+*.onnx
+*.zip
+*.tar
+*.tar.gz
+
+# Generated figures and local metadata
+docs/figures/generated/
+*.local

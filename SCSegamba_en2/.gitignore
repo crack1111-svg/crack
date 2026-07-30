@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.so
+.Python
+.pytest_cache/
+.mypy_cache/
+
+# Environments and local configuration
+.venv/
+venv/
+env/
+*.local
+.idea/
+.vscode/
+
+# Training outputs and model artifacts
+logs/
+runs/
+checkpoints/
+results/
+outputs/
+*.pth
+*.pt
+*.ckpt
+*.onnx
+
+# Datasets and generated media
+data/
+datasets_data/
+docs/figures/generated/
+*.zip
+*.tar
+*.tar.gz
