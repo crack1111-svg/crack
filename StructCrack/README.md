@@ -36,7 +36,7 @@ The released code implements the following main components:
 - `datasets/crack_dataset.py`: paired image-mask loading and training augmentation;
 - `eval/` and `eval_compute.py`: F1, precision, recall, mIoU, ODS, and OIS evaluation.
 
-The model architecture diagram is available at [`docs/figures/structcrack_architecture.svg`](docs/figures/structcrack_architecture.svg). No dataset images, checkpoints, or unverified result plots are included in this code release.
+The complete manuscript PDF is available at [`../StructCrack_manuscript.pdf`](../StructCrack_manuscript.pdf). No dataset images, checkpoints, or unverified result plots are included in this code release.
 
 ## Directory structure
 

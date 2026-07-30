@@ -4,6 +4,10 @@ This repository provides the research code for the manuscript **“StructCrack: 
 
 The model is designed for binary pixel-level segmentation of cracks in structural images. It contains a structure-aware visual state-space backbone, gated bottleneck convolution, structure-aware feature processing, multi-scale fusion, a detail branch, and a decoder. Training, inference, model profiling, and metric computation are provided as executable scripts.
 
+## Manuscript
+
+The manuscript PDF is included for reference: [Download StructCrack manuscript](StructCrack_manuscript.pdf).
+
 ## Visual method summary
 
 ```mermaid
@@ -18,9 +22,7 @@ flowchart LR
     D --> O[Binary crack mask]
 ```
 
-![StructCrack model architecture](StructCrack/docs/figures/structcrack_architecture.svg)
-
-The supplied directory did not contain raster figures, dataset images, prediction examples, or checkpoint files. To keep this release academically accurate, no unverified result image or numerical claim is embedded in this README. Qualitative figures can be added under `docs/figures/` only when the image source, dataset split, checkpoint, threshold, and license are recorded.
+The repository does not include dataset images, prediction examples, or checkpoint files. Numerical results should be taken from the manuscript and reproduced using the documented dataset split and configuration.
 
 ## Main contents
 
