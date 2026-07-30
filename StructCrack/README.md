@@ -12,7 +12,13 @@ The code is being prepared for public release in support of the manuscript:
 
 > *StructCrack: A Lightweight Structure-Aware MambaNetwork for Fine-Grained Crack Segmentation*
 
-The codebase contains experiment controls in `option.py`, including baseline, high-accuracy, lightweight, and ablation presets. The repository should be tagged with a version corresponding to the manuscript revision before citation.
+The codebase contains experiment controls in `option.py`, including baseline, high-accuracy, lightweight, and ablation presets. The repository should be tagged with a version corresponding to the manuscript revision before public release.
+
+## Model architecture
+
+The model figure from the manuscript is available as [PDF](docs/figures/model.pdf) and as a [PNG preview](docs/figures/model.png).
+
+![StructCrack model architecture](docs/figures/model.png)
 
 ## Method overview
 
@@ -74,8 +80,8 @@ The original implementation was developed for the following software stack. Exac
 Install the pinned high-level dependencies with:
 
 ```bash
-conda create -n scsegamba python=3.10 -y
-conda activate scsegamba
+conda create -n structcrack python=3.10 -y
+conda activate structcrack
 pip install -r requirements.txt
 ```
 
@@ -109,7 +115,7 @@ Run training from the repository root:
 ```bash
 python main.py --dataset_path /path/to/DATASET_ROOT \
   --exp_preset high_acc \
-  --output_dir ./logs/checkpoints/scsegamba_highacc
+  --output_dir ./logs/checkpoints/structcrack_highacc
 ```
 
 Available presets are `baseline`, `high_acc`, `lightweight`, and the ablation presets defined in `option.py`. For a controlled experiment, record the complete command line, random seed, dataset split, GPU model, CUDA version, checkpoint selection rule, and final threshold.
@@ -155,27 +161,6 @@ Code DOI: to be assigned after the public release is archived.
 ```
 
 The public release should include the source code, configuration files, dataset split/index files where redistribution is permitted, environment information, evaluation instructions, and manuscript-matching checkpoints where redistribution is permitted. Dataset images and annotations remain subject to the terms of their original providers.
-
-## Limitations and responsible use
-
-This release does not establish that the model generalizes to every material, illumination condition, camera system, or crack morphology. Performance depends on dataset composition, annotation quality, preprocessing, threshold selection, and checkpoint choice. The model is intended as a research tool for segmentation experiments and should not be used as the sole basis for structural safety decisions without independent engineering inspection and validation.
-
-## Citation
-
-Please cite the associated manuscript and the archived code release. The repository citation should use the permanent DOI once it has been minted.
-
-```bibtex
-@inproceedings{liu2025scsegamba,
-  title={SCSegamba: Lightweight Structure-Aware Vision Mamba for Crack Segmentation in Structures},
-  author={Liu, Hui and Jia, Chen and Shi, Fan and Cheng, Xu and Chen, Shengyong},
-  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-  year={2025}
-}
-```
-
-## Third-party components
-
-This project includes or adapts code from open-source software, including MMCV/MMClassification-related utilities and Mamba-based model components. Before publication, retain the corresponding license and attribution notices for every redistributed third-party component, and verify that the final repository complies with their licenses.
 
 ## Contact
 

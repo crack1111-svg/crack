@@ -8,6 +8,12 @@ The model is designed for binary pixel-level segmentation of cracks in structura
 
 The manuscript PDF is included for reference: [Download StructCrack manuscript](StructCrack_manuscript.pdf).
 
+## Model architecture
+
+The model figure from the manuscript is available as [PDF](StructCrack/docs/figures/model.pdf) and as a [PNG preview](StructCrack/docs/figures/model.png).
+
+![StructCrack model architecture](StructCrack/docs/figures/model.png)
+
 ## Visual method summary
 
 ```mermaid
@@ -45,8 +51,8 @@ The reference environment is Python 3.10, PyTorch 1.13.1, torchvision 0.14.1, CU
 
 ```bash
 cd StructCrack
-conda create -n scsegamba python=3.10 -y
-conda activate scsegamba
+conda create -n structcrack python=3.10 -y
+conda activate structcrack
 pip install -r requirements.txt
 ```
 
@@ -77,7 +83,7 @@ From `StructCrack/`:
 ```bash
 python main.py --dataset_path /path/to/DATASET_ROOT \
   --exp_preset high_acc \
-  --output_dir ./logs/checkpoints/scsegamba_highacc
+  --output_dir ./logs/checkpoints/structcrack_highacc
 ```
 
 Available presets include `baseline`, `high_acc`, `lightweight`, and the ablation presets defined in `option.py`.
@@ -105,24 +111,3 @@ The public repository URL is:
 <https://github.com/crack1111-svg/crack>
 
 Before submitting the manuscript revision, create a versioned GitHub release and archive it with Zenodo or another recognised DOI-assigning repository. Insert the permanent DOI and release tag into [`StructCrack/CODE_AVAILABILITY.md`](StructCrack/CODE_AVAILABILITY.md) and the manuscript’s Code Availability section. The manuscript-matching release should include the source code, configuration, split/index files where permitted, environment description, and evaluation instructions.
-
-## Limitations
-
-This code release does not by itself establish generalization to all structures, materials, lighting conditions, sensors, or crack morphologies. Results may be affected by dataset bias, annotation quality, image resizing, threshold selection, and checkpoint choice. The model is a research tool and should not be used as the sole basis for structural safety decisions without independent engineering inspection and validation.
-
-## Citation
-
-Please cite the associated manuscript and the archived version of this code release using its permanent DOI. The underlying project provides the following citation record:
-
-```bibtex
-@inproceedings{liu2025scsegamba,
-  title={SCSegamba: Lightweight Structure-Aware Vision Mamba for Crack Segmentation in Structures},
-  author={Liu, Hui and Jia, Chen and Shi, Fan and Cheng, Xu and Chen, Shengyong},
-  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-  year={2025}
-}
-```
-
-## License and third-party notices
-
-The source tree contains or adapts third-party components, including MMCV/MMClassification-related utilities and Mamba-based components. Before publication, retain all upstream license and attribution notices and verify that redistribution is permitted. The final repository should include an explicit license file matching the rights granted for the complete source tree.
