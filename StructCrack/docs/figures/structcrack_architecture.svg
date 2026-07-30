@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="640" viewBox="0 0 1400 640" role="img" aria-labelledby="title desc">
+  <title id="title">StructCrack model architecture</title>
+  <desc id="desc">Architecture diagram showing image preprocessing, the SAVSS backbone, structure-aware scanning, gated bottleneck convolution, feature fusion, detail refinement, decoder, and binary crack mask output.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#334155"/>
+    </marker>
+    <style>
+      .box { stroke: #334155; stroke-width: 2; }
+      .label { font-family: Arial, Helvetica, sans-serif; font-size: 22px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+      .small { font-family: Arial, Helvetica, sans-serif; font-size: 16px; fill: #334155; text-anchor: middle; }
+      .arrow { stroke: #334155; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect width="1400" height="640" fill="#f8fafc"/>
+  <text x="700" y="48" class="label" style="font-size:30px">StructCrack architecture</text>
+  <text x="700" y="78" class="small">Lightweight structure-aware Mamba network for binary crack segmentation</text>
+  <rect x="45" y="255" width="170" height="105" rx="12" class="box" fill="#dbeafe"/>
+  <text x="130" y="295" class="label">RGB image</text>
+  <text x="130" y="325" class="small">structural scene</text>
+  <rect x="260" y="255" width="185" height="105" rx="12" class="box" fill="#e0f2fe"/>
+  <text x="352" y="295" class="label">Preprocess</text>
+  <text x="352" y="325" class="small">resize and normalize</text>
+  <rect x="490" y="220" width="220" height="175" rx="12" class="box" fill="#dcfce7"/>
+  <text x="600" y="270" class="label">SAVSS</text>
+  <text x="600" y="302" class="small">state-space backbone</text>
+  <text x="600" y="330" class="small">multi-scale features</text>
+  <text x="600" y="358" class="small">structure-aware context</text>
+  <rect x="770" y="125" width="220" height="105" rx="12" class="box" fill="#fef3c7"/>
+  <text x="880" y="165" class="label">SASS</text>
+  <text x="880" y="195" class="small">structure-aware scanning</text>
+  <rect x="770" y="300" width="220" height="105" rx="12" class="box" fill="#ffedd5"/>
+  <text x="880" y="340" class="label">GBC</text>
+  <text x="880" y="370" class="small">gated bottleneck convolution</text>
+  <rect x="1050" y="220" width="210" height="175" rx="12" class="box" fill="#fce7f3"/>
+  <text x="1155" y="270" class="label">Fusion</text>
+  <text x="1155" y="302" class="small">multi-scale aggregation</text>
+  <text x="1155" y="330" class="small">detail branch</text>
+  <text x="1155" y="358" class="small">boundary refinement</text>
+  <rect x="1050" y="475" width="210" height="95" rx="12" class="box" fill="#ede9fe"/>
+  <text x="1155" y="513" class="label">Decoder</text>
+  <text x="1155" y="543" class="small">binary crack probability</text>
+  <rect x="1290" y="475" width="85" height="95" rx="12" class="box" fill="#d1fae5"/>
+  <text x="1332" y="513" class="label" style="font-size:18px">Mask</text>
+  <text x="1332" y="543" class="small" style="font-size:13px">0/1</text>
+  <path d="M215 307 L260 307" class="arrow"/>
+  <path d="M445 307 L490 307" class="arrow"/>
+  <path d="M710 270 L770 185" class="arrow"/>
+  <path d="M710 345 L770 350" class="arrow"/>
+  <path d="M990 185 L1050 270" class="arrow"/>
+  <path d="M990 350 L1050 345" class="arrow"/>
+  <path d="M1155 395 L1155 475" class="arrow"/>
+  <path d="M1260 522 L1290 522" class="arrow"/>
+  <text x="700" y="610" class="small">Exact tensor sizes depend on the selected experiment configuration.</text>
+</svg>

@@ -1,6 +1,6 @@
-# StructCrack / SCSegamba Crack Segmentation Code Release
+# StructCrack: Lightweight Structure-Aware Mamba Network for Crack Segmentation
 
-This repository provides the research code for the manuscript **“StructCrack: A Lightweight Structure-Aware MambaNetwork for Fine-Grained Crack Segmentation.”** The implementation is contained in [`SCSegamba_en2/`](SCSegamba_en2/).
+This repository provides the research code for the manuscript **“StructCrack: A Lightweight Structure-Aware MambaNetwork for Fine-Grained Crack Segmentation.”** The implementation is contained in [`StructCrack/`](StructCrack/).
 
 The model is designed for binary pixel-level segmentation of cracks in structural images. It contains a structure-aware visual state-space backbone, gated bottleneck convolution, structure-aware feature processing, multi-scale fusion, a detail branch, and a decoder. Training, inference, model profiling, and metric computation are provided as executable scripts.
 
@@ -18,29 +18,31 @@ flowchart LR
     D --> O[Binary crack mask]
 ```
 
+![StructCrack model architecture](StructCrack/docs/figures/structcrack_architecture.svg)
+
 The supplied directory did not contain raster figures, dataset images, prediction examples, or checkpoint files. To keep this release academically accurate, no unverified result image or numerical claim is embedded in this README. Qualitative figures can be added under `docs/figures/` only when the image source, dataset split, checkpoint, threshold, and license are recorded.
 
 ## Main contents
 
 | Path | Description |
 | --- | --- |
-| [`SCSegamba_en2/main.py`](SCSegamba_en2/main.py) | Training entry point |
-| [`SCSegamba_en2/test.py`](SCSegamba_en2/test.py) | Checkpoint-based inference |
-| [`SCSegamba_en2/eval_compute.py`](SCSegamba_en2/eval_compute.py) | Prediction metric computation |
-| [`SCSegamba_en2/option.py`](SCSegamba_en2/option.py) | Experiment presets and hyperparameters |
-| [`SCSegamba_en2/models/`](SCSegamba_en2/models/) | Model modules, fusion, detail branch, and decoder |
-| [`SCSegamba_en2/mmcls/SAVSS_dev/`](SCSegamba_en2/mmcls/SAVSS_dev/) | SAVSS implementation |
-| [`SCSegamba_en2/datasets/`](SCSegamba_en2/datasets/) | Image-mask loading and training augmentation |
-| [`SCSegamba_en2/eval/`](SCSegamba_en2/eval/) | F1, precision, recall, mIoU, ODS, and OIS evaluation |
-| [`SCSegamba_en2/README.md`](SCSegamba_en2/README.md) | Full installation and reproducibility guide |
-| [`SCSegamba_en2/CODE_AVAILABILITY.md`](SCSegamba_en2/CODE_AVAILABILITY.md) | Manuscript-facing code availability statement |
+| [`StructCrack/main.py`](StructCrack/main.py) | Training entry point |
+| [`StructCrack/test.py`](StructCrack/test.py) | Checkpoint-based inference |
+| [`StructCrack/eval_compute.py`](StructCrack/eval_compute.py) | Prediction metric computation |
+| [`StructCrack/option.py`](StructCrack/option.py) | Experiment presets and hyperparameters |
+| [`StructCrack/models/`](StructCrack/models/) | Model modules, fusion, detail branch, and decoder |
+| [`StructCrack/mmcls/SAVSS_dev/`](StructCrack/mmcls/SAVSS_dev/) | SAVSS implementation |
+| [`StructCrack/datasets/`](StructCrack/datasets/) | Image-mask loading and training augmentation |
+| [`StructCrack/eval/`](StructCrack/eval/) | F1, precision, recall, mIoU, ODS, and OIS evaluation |
+| [`StructCrack/README.md`](StructCrack/README.md) | Full installation and reproducibility guide |
+| [`StructCrack/CODE_AVAILABILITY.md`](StructCrack/CODE_AVAILABILITY.md) | Manuscript-facing code availability statement |
 
 ## Environment
 
-The reference environment is Python 3.10, PyTorch 1.13.1, torchvision 0.14.1, CUDA 11.6, `mmcv-full`, Mamba-SSM 1.2.0, OpenCV, NumPy, and the packages listed in [`SCSegamba_en2/requirements.txt`](SCSegamba_en2/requirements.txt). Linux with an NVIDIA GPU is recommended because MMCV and Mamba-SSM include compiled components. Windows users may need to select compatible pre-built wheels or build tools.
+The reference environment is Python 3.10, PyTorch 1.13.1, torchvision 0.14.1, CUDA 11.6, `mmcv-full`, Mamba-SSM 1.2.0, OpenCV, NumPy, and the packages listed in [`StructCrack/requirements.txt`](StructCrack/requirements.txt). Linux with an NVIDIA GPU is recommended because MMCV and Mamba-SSM include compiled components. Windows users may need to select compatible pre-built wheels or build tools.
 
 ```bash
-cd SCSegamba_en2
+cd StructCrack
 conda create -n scsegamba python=3.10 -y
 conda activate scsegamba
 pip install -r requirements.txt
@@ -68,7 +70,7 @@ Potential benchmark sources mentioned by the underlying project include [TUT](ht
 
 ## Usage
 
-From `SCSegamba_en2/`:
+From `StructCrack/`:
 
 ```bash
 python main.py --dataset_path /path/to/DATASET_ROOT \
@@ -100,7 +102,7 @@ The public repository URL is:
 
 <https://github.com/crack1111-svg/crack>
 
-Before submitting the manuscript revision, create a versioned GitHub release and archive it with Zenodo or another recognised DOI-assigning repository. Insert the permanent DOI and release tag into [`SCSegamba_en2/CODE_AVAILABILITY.md`](SCSegamba_en2/CODE_AVAILABILITY.md) and the manuscript’s Code Availability section. The manuscript-matching release should include the source code, configuration, split/index files where permitted, environment description, and evaluation instructions.
+Before submitting the manuscript revision, create a versioned GitHub release and archive it with Zenodo or another recognised DOI-assigning repository. Insert the permanent DOI and release tag into [`StructCrack/CODE_AVAILABILITY.md`](StructCrack/CODE_AVAILABILITY.md) and the manuscript’s Code Availability section. The manuscript-matching release should include the source code, configuration, split/index files where permitted, environment description, and evaluation instructions.
 
 ## Limitations
 

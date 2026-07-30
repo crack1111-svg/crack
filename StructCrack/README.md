@@ -1,6 +1,6 @@
-# SCSegamba: Lightweight Structure-Aware Vision Mamba for Crack Segmentation
+# StructCrack: Lightweight Structure-Aware Mamba Network for Crack Segmentation
 
-This repository contains the implementation associated with **SCSegamba**, a lightweight structure-aware vision Mamba network for pixel-level crack segmentation in structural images.
+This repository contains the implementation associated with **StructCrack**, a lightweight structure-aware Mamba network for pixel-level crack segmentation in structural images.
 
 The implementation combines a structure-aware visual state-space module (SAVSS), gated bottleneck convolution (GBC), structure-aware scanning, feature fusion, and a detail branch. The repository also includes dataset loading, training, inference, model profiling, and segmentation-metric evaluation utilities.
 
@@ -12,7 +12,7 @@ The code is being prepared for public release in support of the manuscript:
 
 > *StructCrack: A Lightweight Structure-Aware MambaNetwork for Fine-Grained Crack Segmentation*
 
-The codebase is based on the SCSegamba implementation and contains additional experiment controls in `option.py`, including baseline, high-accuracy, lightweight, and ablation presets. The repository should be tagged with a version corresponding to the manuscript revision before citation.
+The codebase contains experiment controls in `option.py`, including baseline, high-accuracy, lightweight, and ablation presets. The repository should be tagged with a version corresponding to the manuscript revision before citation.
 
 ## Method overview
 
@@ -36,7 +36,7 @@ The released code implements the following main components:
 - `datasets/crack_dataset.py`: paired image-mask loading and training augmentation;
 - `eval/` and `eval_compute.py`: F1, precision, recall, mIoU, ODS, and OIS evaluation.
 
-No raster figures were present in the supplied project directory at the time of this release. Therefore, this README does not include fabricated qualitative examples or unverified result plots. To add a reproducible qualitative figure, place a licensed or author-generated image under `docs/figures/` and record its source, split, checkpoint, threshold, and rendering procedure in the accompanying caption.
+The model architecture diagram is available at [`docs/figures/structcrack_architecture.svg`](docs/figures/structcrack_architecture.svg). No dataset images, checkpoints, or unverified result plots are included in this code release.
 
 ## Directory structure
 
