@@ -1,6 +1,4 @@
-# StructCrack
-
-Lightweight structure-aware Mamba network for fine-grained crack segmentation.
+# StructCrack: A Lightweight Structure-Aware Mamba Network for Fine-Grained Crack Segmentation
 
 ## Overview
 
